@@ -128,5 +128,6 @@ with col2:
     if st.button("🔎 Screening IDX + Sentimen Pasar"):
         screening_idx(dengan_sentimen=True)
 
-if "IS_CRON" in st.experimental_get_query_params():
+# Jalankan otomatis jika URL mengandung ?IS_CRON=1
+if "IS_CRON" in st.query_params:
     screening_idx(dengan_sentimen=True)
