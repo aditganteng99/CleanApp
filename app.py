@@ -1,4 +1,3 @@
-
 import streamlit as st
 import os
 import yfinance as yf
@@ -108,12 +107,11 @@ def screening_idx(dengan_sentimen=False):
     if df.empty:
         st.warning("❌ Tidak ada saham yang lolos filter hari ini.")
     else:
-       body = f"""📈 Sinyal Saham:
+        body = f"""📈 Sinyal Saham:
 
 {df.to_string(index=False)}
 """
-
-" + df.to_string(index=False)
+        st.dataframe(df)
         st.download_button("⬇️ Download CSV", data=df.to_csv(index=False).encode(), file_name="sinyal.csv")
         if st.button("📧 Kirim ke Email"):
             if kirim_email(body):
