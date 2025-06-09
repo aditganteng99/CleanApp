@@ -19,24 +19,7 @@ st.title("📈 Aplikasi Screening Saham IDX Otomatis + Sentimen")
 
 @st.cache_data
 def get_all_idx_tickers():
-    return ["AALI.JK", "ABBA.JK", "ABDA.JK", "ABMM.JK", "ACES.JK", "ACST.JK", "ADES.JK", "ADHI.JK", "ADMF.JK", "ADMG.JK",
-        "ADRO.JK", "AGII.JK", "AGRO.JK", "AGRS.JK", "AHAP.JK", "AIMS.JK", "AISA.JK", "AKKU.JK", "AKPI.JK", "AKRA.JK",
-        "AKSI.JK", "ALDO.JK", "ALKA.JK", "ALMI.JK", "ALTO.JK", "AMAG.JK", "AMFG.JK", "AMIN.JK", "AMRT.JK", "ANJT.JK",
-        "ANTM.JK", "APEX.JK", "APIC.JK", "APII.JK", "APLI.JK", "APLN.JK", "ARGO.JK", "ARII.JK", "ARNA.JK", "ARTA.JK",
-        "ARTI.JK", "ARTO.JK", "ASBI.JK", "ASDM.JK", "ASGR.JK", "ASII.JK", "ASJT.JK", "ASMI.JK", "ASRI.JK", "ASRM.JK",
-        "ASSA.JK", "ATIC.JK", "AUTO.JK", "BABP.JK", "BACA.JK", "BAJA.JK", "BALI.JK", "BAPA.JK", "BATA.JK", "BAYU.JK",
-        "BBCA.JK", "BBHI.JK", "BBKP.JK", "BCAP.JK", "BCIC.JK", "BCIP.JK", "BDMN.JK", "BEKS.JK", "BEST.JK", "BFIN.JK",
-        "BGTG.JK", "BHIT.JK", "BIKA.JK", "BIMA.JK", "BINA.JK", "BIPI.JK", "BIPP.JK", "BIRD.JK", "BISI.JK", "BJBR.JK",
-        "BJTM.JK", "BKDP.JK", "BKSL.JK", "BKSW.JK", "BLTA.JK", "BLTZ.JK", "BMAS.JK", "BMRI.JK", "BMSR.JK", "BMTR.JK",
-        "BNBA.JK", "BNBR.JK", "BNGA.JK", "BNII.JK", "BNLI.JK", "BOLT.JK", "BPFI.JK", "BPII.JK", "BRAM.JK", "BRMS.JK",
-        "BRNA.JK", "BRPT.JK", "BSDE.JK", "BSIM.JK", "BSSR.JK", "BSWD.JK", "BTEK.JK", "BTEL.JK", "BTON.JK", "BTPN.JK",
-        "BUDI.JK", "BUKK.JK", "BULL.JK", "BUMI.JK", "BUVA.JK", "BVIC.JK", "BWPT.JK", "BYAN.JK", "CANI.JK", "CASS.JK",
-        "CEKA.JK", "CENT.JK", "CFIN.JK", "CINT.JK", "CITA.JK", "CLPI.JK", "CMNP.JK", "CMPP.JK", "CNKO.JK", "CNTX.JK",
-        "COWL.JK", "CPIN.JK", "CPRO.JK", "CSAP.JK", "CTBN.JK", "CTRA.JK", "CTTH.JK", "DART.JK", "DEFI.JK", "DEWA.JK",
-        "DGIK.JK", "DILD.JK", "DKFT.JK", "DLTA.JK", "DMAS.JK", "DNAR.JK", "DNET.JK", "DOID.JK", "DPNS.JK", "DSFI.JK",
-        "DSNG.JK", "DSSA.JK", "DUTI.JK", "DVLA.JK", "DYAN.JK", "ECII.JK", "EKAD.JK", "ELSA.JK", "ELTY.JK", "EMDE.JK",
-        "EMTK.JK", "ENRG.JK", "EPMT.JK", "ERAA.JK", "ERTX.JK", "ESSA.JK", "ESTI.JK", "ETWA.JK", "EXCL.JK", "FAST.JK",
-        "TOOL.JK"]
+    return ["ANTM.JK", "BBCA.JK", "TLKM.JK", "ADRO.JK", "MDKA.JK"]
 
 def cek_sentimen_google(ticker):
     try:
