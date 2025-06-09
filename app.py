@@ -19,7 +19,51 @@ st.title("📈 Aplikasi Screening Saham IDX Otomatis + Sentimen")
 
 @st.cache_data
 def get_all_idx_tickers():
-    return ["ANTM.JK", "BBCA.JK", "TLKM.JK", "ADRO.JK", "MDKA.JK"]
+    return ["ACES.JK",  # Aspirasi Hidup Indonesia
+    "ADMR.JK",  # Adaro Minerals Indonesia
+    "ADRO.JK",  # Alamtri Resources Indonesia
+    "AKRA.JK",  # AKR Corporindo
+    "AMMN.JK",  # Amman Mineral Internasional
+    "AMRT.JK",  # Sumber Alfaria Trijaya
+    "ANTM.JK",  # Aneka Tambang
+    "ARTO.JK",  # Bank Jago
+    "ASII.JK",  # Astra International
+    "BBCA.JK",  # Bank Central Asia
+    "BBNI.JK",  # Bank Negara Indonesia
+    "BBRI.JK",  # Bank Rakyat Indonesia
+    "BBTN.JK",  # Bank Tabungan Negara
+    "BMRI.JK",  # Bank Mandiri
+    "BRIS.JK",  # Bank Syariah Indonesia
+    "BRPT.JK",  # Barito Pacific
+    "CPIN.JK",  # Charoen Pokphand Indonesia
+    "CTRA.JK",  # Ciputra Development
+    "ESSA.JK",  # ESSA Industries
+    "EXCL.JK",  # XL Axiata
+    "GOTO.JK",  # GoTo Gojek Tokopedia
+    "ICBP.JK",  # Indofood CBP Sukses Makmur
+    "INCO.JK",  # Vale Indonesia
+    "INDF.JK",  # Indofood Sukses Makmur
+    "INKP.JK",  # Indah Kiat Pulp & Paper
+    "ISAT.JK",  # Indosat
+    "ITMG.JK",  # Indo Tambangraya Megah
+    "JPFA.JK",  # Japfa Comfeed Indonesia
+    "JSMR.JK",  # Jasa Marga
+    "KLBF.JK",  # Kalbe Farma
+    "MAPA.JK",  # MAP Aktif Adiperkasa
+    "MAPI.JK",  # Mitra Adiperkasa
+    "MBMA.JK",  # Merdeka Battery Materials
+    "MDKA.JK",  # Merdeka Copper Gold
+    "MEDC.JK",  # Medco Energi Internasional
+    "PGAS.JK",  # Perusahaan Gas Negara
+    "PGEO.JK",  # Pertamina Geothermal Energy
+    "PTBA.JK",  # Bukit Asam
+    "SIDO.JK",  # Industri Jamu & Farmasi Sido Muncul
+    "SMGR.JK",  # Semen Indonesia
+    "SMRA.JK",  # Summarecon Agung
+    "TLKM.JK",  # Telkom Indonesia
+    "TOWR.JK",  # Sarana Menara Nusantara
+    "UNTR.JK",  # United Tractors
+    "UNVR.JK",  # Unilever Indonesia]
 
 def cek_sentimen_google(ticker):
     try:
