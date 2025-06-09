@@ -108,8 +108,10 @@ def screening_idx(dengan_sentimen=False):
     if df.empty:
         st.warning("❌ Tidak ada saham yang lolos filter hari ini.")
     else:
-        st.dataframe(df)
-        body = "📈 Sinyal Saham:
+       body = f"""📈 Sinyal Saham:
+
+{df.to_string(index=False)}
+"""
 
 " + df.to_string(index=False)
         st.download_button("⬇️ Download CSV", data=df.to_csv(index=False).encode(), file_name="sinyal.csv")
