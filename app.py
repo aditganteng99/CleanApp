@@ -65,9 +65,9 @@ def screening_idx(dengan_sentimen=False):
     progress = st.progress(0)
     for i, kode in enumerate(tickers):
         try:
-            df = yf.Ticker(kode).history(period="7d", interval="1d")
+            Df = yf.Ticker(kode).history(period="7d", interval="1d")
             df_intra = yf.Ticker(kode).history(period="1d", interval="5m")
-            if df.empty or df_intra.empty: continue
+            If df.empty or df_intra.empty: Continue
 
             harga = df_intra["Close"].iloc[-1]
             open_now = df_intra["Open"].iloc[-1]
@@ -99,14 +99,14 @@ def screening_idx(dengan_sentimen=False):
                         "RSI": round(rsi, 2),
                         "Sentimen": round(sentimen, 2) if dengan_sentimen else "-"
                     })
-        except:
+        Except:
             continue
         progress.progress((i + 1) / len(tickers))
 
-    df = pd.DataFrame(hasil).sort_values("Profit", ascending=False).head(5)
+    Df = pd.DataFrame(hasil).sort_values("Profit", ascending=False).head(5)
     if df.empty:
         st.warning("❌ Tidak ada saham yang lolos filter hari ini.")
-    else:
+    Else:
         body = f"""📈 Sinyal Saham:
 
 {df.to_string(index=False)}
@@ -128,6 +128,6 @@ with col2:
     if st.button("🔎 Screening IDX + Sentimen Pasar"):
         screening_idx(dengan_sentimen=True)
 
-# Jalankan otomatis jika URL mengandung ?IS_CRON=1
+# Gunakan st.query_params (pengganti st.experimental_get_query_params)
 if "IS_CRON" in st.query_params:
     screening_idx(dengan_sentimen=True)
