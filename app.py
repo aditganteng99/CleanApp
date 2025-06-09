@@ -62,30 +62,45 @@ def screening_idx(dengan_sentimen=False):
     modal = 10_000_000
 
     progress = st.progress(0)
+    st.write(f"Mulai screening {len(tickers)} saham...")
+
     for i, kode in enumerate(tickers):
         try:
-            df = yf.Ticker(kode).history(period="7d", interval="1d")
-            df_intra = yf.Ticker(kode).history(period="1d", interval="5m")
+            ticker_obj = yf.Ticker(kode)
+            df = ticker_obj.history(period="7d", interval="1d")
+            df_intra = ticker_obj.history(period="1d", interval="5m")
+
             if df.empty or df_intra.empty:
+                st.write(f"Data kosong untuk {kode}, dilewati.")
                 continue
 
             harga = df_intra["Close"].iloc[-1]
             open_now = df_intra["Open"].iloc[-1]
             ma5 = df["Close"].rolling(5).mean().iloc[-1]
             ma20 = df["Close"].rolling(20).mean().iloc[-1]
-            rsi = 100 - (100 / (1 + (
-                df["Close"].diff().where(lambda x: x > 0, 0).rolling(14).mean().iloc[-1] /
-                df["Close"].diff().where(lambda x: x < 0, 0).abs().rolling(14).mean().iloc[-1]
-            )))
+
+            gain = df["Close"].diff().where(lambda x: x > 0, 0).rolling(14).mean().iloc[-1]
+            loss = df["Close"].diff().where(lambda x: x < 0, 0).abs().rolling(14).mean().iloc[-1]
+
+            if loss == 0:
+                rsi = 100
+            else:
+                rsi = 100 - (100 / (1 + (gain / loss)))
+
             avg_vol = df["Volume"].rolling(5).mean().iloc[-1]
 
-            if (harga > open_now and ma5 > ma20 and rsi < 60 and df["Volume"].iloc[-1] > avg_vol):
+            kondisi = (harga > open_now and ma5 > ma20 and rsi < 60 and df["Volume"].iloc[-1] > avg_vol)
+            if kondisi:
                 lot = max(int(modal // (harga * 100)), 1)
                 tp = harga * 1.03
                 sl = harga * 0.98
                 est_profit = int((tp - harga) * lot * 100)
                 est_loss = int((harga - sl) * lot * 100)
-                sentimen = cek_sentimen_google(kode.replace(".JK", "")) if dengan_sentimen else 1
+
+                sentimen = 1
+                if dengan_sentimen:
+                    sentimen = cek_sentimen_google(kode.replace(".JK", ""))
+                    st.write(f"Sentimen untuk {kode}: {sentimen}")
 
                 if not dengan_sentimen or sentimen > 0:
                     hasil.append({
@@ -99,26 +114,45 @@ def screening_idx(dengan_sentimen=False):
                         "RSI": round(rsi, 2),
                         "Sentimen": round(sentimen, 2) if dengan_sentimen else "-"
                     })
-        except:
-            continue
+                else:
+                    st.write(f"{kode} disaring karena sentimen <= 0.")
+            else:
+                st.write(f"{kode} tidak memenuhi kondisi screening.")
+
+        except Exception as e:
+            st.write(f"Error pada ticker {kode}: {e}")
+
         progress.progress((i + 1) / len(tickers))
 
-    df = pd.DataFrame(hasil).sort_values("Profit", ascending=False).head(5)
-    if df.empty:
+    st.write(f"Jumlah saham lolos filter: {len(hasil)}")
+
+    if not hasil:
         st.warning("❌ Tidak ada saham yang lolos filter hari ini.")
-    else:
-        body = f"""📈 Sinyal Saham:
+        return pd.DataFrame()
+
+    df = pd.DataFrame(hasil)
+
+    if "Profit" not in df.columns:
+        st.error("Data hasil tidak memiliki kolom 'Profit'.")
+        return df
+
+    df = df.sort_values("Profit", ascending=False).head(5)
+
+    st.dataframe(df)
+    st.download_button("⬇️ Download CSV", data=df.to_csv(index=False).encode(), file_name="sinyal.csv")
+
+    body = f"""📈 Sinyal Saham:
 
 {df.to_string(index=False)}
 """
-        st.dataframe(df)
-        st.download_button("⬇️ Download CSV", data=df.to_csv(index=False).encode(), file_name="sinyal.csv")
-        if st.button("📧 Kirim ke Email"):
-            if kirim_email(body):
-                st.success("📬 Email berhasil dikirim.")
-            else:
-                st.error("Gagal kirim email.")
+    if st.button("📧 Kirim ke Email"):
+        if kirim_email(body):
+            st.success("📬 Email berhasil dikirim.")
+        else:
+            st.error("Gagal kirim email.")
+
     return df
+
 
 col1, col2 = st.columns(2)
 with col1:
@@ -128,6 +162,5 @@ with col2:
     if st.button("🔎 Screening IDX + Sentimen Pasar"):
         screening_idx(dengan_sentimen=True)
 
-# Jalankan otomatis jika parameter ?IS_CRON=1 diberikan
 if "IS_CRON" in st.query_params:
     screening_idx(dengan_sentimen=True)
