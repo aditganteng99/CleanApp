@@ -63,7 +63,8 @@ def get_all_idx_tickers():
     "TLKM.JK",  # Telkom Indonesia
     "TOWR.JK",  # Sarana Menara Nusantara
     "UNTR.JK",  # United Tractors
-    "UNVR.JK",  # Unilever Indonesia]
+    "UNVR.JK",  # Unilever Indonesia 
+           ]
 
 def cek_sentimen_google(ticker):
     try:
